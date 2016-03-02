@@ -43,17 +43,14 @@ player = 0 # starting player
 def guess_ship(playa, ship_row, ship_col, player_board):
 
   
-#4a. Collects guess values of battleship position from player 
-    guess_row = int(input("%s Please guess a row number:" % (playa)))# receives guessed row number from player. {}.format(name)
-    guess_col = int(input("Also guess a column number: "))# receives guessed column number from player
-
-#4b. Compares guess values with randomly generated values
+#4a. Compares guess values with randomly generated values
     #print_board(board)
+     
     print("The board shows your previous guess(es)")
     player_board.show_board()
-
-
-
+#4b. Collects guess values of battleship position from player
+    guess_row = int(input("%s Please guess a row number:" % (playa)))# receives guessed row number from player. {}.format(name)
+    guess_col = int(input("Also guess a column number: "))# receives guessed column number from player
 
     if guess_row == ship_row and guess_col == ship_col: # Condition where player wins
         print("Congratulations! You sunk the battleship!")
@@ -72,16 +69,30 @@ def guess_ship(playa, ship_row, ship_col, player_board):
                 
                 
 players = [player1, player2]
-player = 0 # starting player 
+current_player_index = 0 # starting player
 
-for turn in range(max_games):
-    turn = turn +1
+def next_player_index(turn):
+        if turn % 2 == 1:
+            return 1
+        else:
+            return 0
+"""
+turn % 2 = 0 means player 2
+turn % 2 = 1 means player 1
+input odd, intended output player1, actual output:
+input even, intended output , actual output : 
+"""
+
+
+for turn in range( 1,(max_games+1) ):
+    
     print("Turn", turn)
              
         
-    guess_ship(players[player], ship_row, ship_col, player_boards[player])
-    player = ( ( player +1 )% 2) #0: 1, 1: 0
-
+    guess_ship(players[current_player_index], ship_row, ship_col, player_boards[current_player_index])
+    #current_player_index = ( ( current_player_index +1 )% 2) #0: 1, 1: 0
+    current_player_index = next_player_index(turn)
+     
         
     if turn == max_games:
         print("Game Over!")
