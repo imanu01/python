@@ -2,14 +2,13 @@
 but represents classes board and player used in battleship_second. This script is expected to be imported into
 the battleship_second script"""
 board = []
-board1 = []
-board2 = []
+
 
 class Board(object):
     
 	
     def __init__( self, board, number, size, ):
-        self.board = board
+        self.board = []
         self.number = number
         self.size = size
 		
@@ -26,22 +25,24 @@ class Board(object):
     def show_board( self ):
         print( "Board: %d" % self.number )
         for row in self.board:# columns within each row are fused together
-            print( ' '.join( row ) )	
-
-	
-	
+            print( ' '.join( row ) )
+"""
+board1=[]
+board_one = Board(board, 1, 5)
+"""
 
 class Player( object ):
     
-    def __init__( self, name, board ):
-        self.name = name
-        self.board = board
-		
-    def player_turns(self, player):
-        if total_turns % 2 == 1:
-            return player_one
-        else:
-            return player_two
+    def __init__( self, player_name, board, number, size ):
+        self.player_name = player_name
+        self.number = number
+        self.player_board = Board(board, number, size ) #gets values from the board class
+"""        
+player_one = Player('Joe', board1, 1, 5)
+player_one.number
+player_one.player_board.show_board()
+
+
 """		
 board_one = Board(board1, 1, 5 )
 board_two = Board(board2, 2, 5 )
