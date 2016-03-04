@@ -7,15 +7,11 @@ import battleship1
 
 #2. Designing the boards for the Game
 board = []
-board1 = []       
-board2 = []  
-total_turns = 0
-#player_boards = [board1,board2]
+
+
 
 board = battleship1.Board(board, 0, 5 )
-board_one = battleship1.Board(board1, 1, 5)
-board_two = battleship1.Board(board2, 2, 5)
-player_boards = [board_one, board_two]
+
 
 max_games = int(input("Enter the maximum number of guesses you want to play: " ))
     
@@ -33,23 +29,24 @@ def random_col(board): # function for random column position of battleship
 ship_row = random_row(board)
 ship_col = random_col(board)
 #print(ship_row,ship_col)
-players = [player1, player2]
-player = 0 # starting player
-    
-    
 
 
+        
+player_one = battleship1.Player( player1, board, 1, 5 )
+player_two = battleship1.Player( player2, board, 2, 5 )
+players = [player_one, player_two]
 
-def guess_ship(playa, ship_row, ship_col, player_board):
+
+def guess_ship(playa, ship_row, ship_col ):
 
   
 #4a. Compares guess values with randomly generated values
     #print_board(board)
      
     print("The board shows your previous guess(es)")
-    player_board.show_board()
+    playa.player_board.show_board()
 #4b. Collects guess values of battleship position from player
-    guess_row = int(input("%s Please guess a row number:" % (playa)))# receives guessed row number from player. {}.format(name)
+    guess_row = int(input("%s Please guess a row number:" % (playa.player_name)))# receives guessed row number from player. {}.format(name)
     guess_col = int(input("Also guess a column number: "))# receives guessed column number from player
 
     if guess_row == ship_row and guess_col == ship_col: # Condition where player wins
@@ -58,18 +55,17 @@ def guess_ship(playa, ship_row, ship_col, player_board):
     else:
     # conditions whereby the player looses
         if (guess_row < 0 or guess_row > 4) or (guess_col < 0 or guess_col > 4): # Case whereby player guesses out of range
-            print("Oops, %s, that's not even in the ocean." %(playa))
-        elif (player_board.board[guess_row][guess_col] == "X"): #Case where player repeats previous guess.
-            print("%s, You guessed that one already."%(playa))
+            print("Oops, %s, that's not even in the ocean." %(playa.player_name))
+        elif (playa.player_board.board[guess_row][guess_col] == "X"): #Case where player repeats previous guess.
+            print("%s, You guessed that one already."%(playa.player_name))
         else: #case whereby player's guess is wrong and not one of the two cases above
-            print( "%s, You missed the battleship!"%(playa))
-            player_board.change_board_square( guess_row, guess_col, "X" )
+            print( "%s, You missed the battleship!"%(playa.player_name))
+            playa.player_board.change_board_square( guess_row, guess_col, "X" )
             #player_board.board[guess_row][guess_col]= "X"
             #board.get_board()[guess_row][guess_col] = "X"
             
                 
                 
-players = [player1, player2]
 current_player_index = 0 # starting player
 
 def next_player_index(turn):
@@ -90,7 +86,7 @@ for turn in range( 1,(max_games+1) ):
     print("Turn", turn)
              
         
-    guess_ship(players[current_player_index], ship_row, ship_col, player_boards[current_player_index])
+    guess_ship( players[current_player_index], ship_row, ship_col )
     #current_player_index = ( ( current_player_index +1 )% 2) #0: 1, 1: 0
     current_player_index = next_player_index(turn)
      
@@ -111,19 +107,18 @@ player_boards[1].board[guess_row][guess_col] == "X"
 
 """
 #print(ship_row,ship_col)
-player_boards[0].change_board_square( ship_row, ship_col, "A" )# in the firt player board, create an instance of the hidden ship.
-print(player_boards[0].board[ship_row][ship_col])
+player_one.player_board.change_board_square( ship_row, ship_col, "A" )# in the firt player board, create an instance of the hidden ship.
+#print(player_one.player_board.board[ship_row][ship_col])
 print("%s guesses:" %( player1 ))
-player_boards[0].show_board() #display the first player board
+player_one.player_board.show_board() #display the first player board containing the missed values of the ship
 
 
-#displaying hidden ship on board
-player_boards[1].change_board_square(ship_row, ship_col, "A")# in the second player board, create an instance of the hidden ship.
+#displaying hidden ship on the second player's board
+player_two.player_board.change_board_square(ship_row, ship_col, "A")# in the second player board, create an instance of the hidden ship.
 
-print(player_boards[1].board[ship_row][ship_col]) # Print the hidden ship on the board
+#print(player_two.player_board.board[ship_row][ship_col]) # Print the hidden ship on the board
 print("%s guesses:" %( player2 ))
-player_boards[1].show_board() #desplay the second player board
-#print(player_boards[1].board)
+player_two.player_board.show_board() #desplay the second player board containing the missed values of the ship
 
 
 
@@ -133,13 +128,10 @@ player_boards[1].show_board() #desplay the second player board
 
 
 
+#Display the actual value of the ship's position when game is over.
            
 
 
 print( "The ship's position is: " "row %s, column %s (represented with letter 'A' on each board)"  % (ship_row, ship_col))            
 
-"""
-players = [player1, player2]
-player = 0 # starting player
-guess_ship(playa, ship_row, ship_col, board_one)
-"""
+
