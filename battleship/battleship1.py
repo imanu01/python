@@ -21,6 +21,12 @@ class Board(object):
     def get_board(self):
         return self.board
 
+#function creates the position of the ship on board
+    def change_board_square(self,row,col,contents):
+        self.board[row][col] = contents
+
+        
+
 #The board is displayed to players
     def show_board( self ):
         print( "Board: %d" % self.number )
@@ -36,14 +42,14 @@ class Player( object ):
     def __init__( self, player_name, board, number, size ):
         self.player_name = player_name
         self.number = number
-        self.player_board = Board(board, number, size ) #gets values from the board class
+        self.player_board = Board(board, number, size ) #gets values from the Board class To define board in player class
 """        
-player_one = Player('Joe', board1, 1, 5)
+player_one = Player('Joe', board, 1, 5)
 player_one.number
 player_one.player_board.show_board()
 
 
-"""		
+		
 board_one = Board(board1, 1, 5 )
 board_two = Board(board2, 2, 5 )
 
@@ -52,5 +58,4 @@ board_two.show_board()
 
 player1 = Player( "Joe", board_one )
 player2 = Player ("Mary", board_two)
-
 """
