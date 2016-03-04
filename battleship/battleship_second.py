@@ -32,7 +32,7 @@ def random_col(board): # function for random column position of battleship
 # Using functions to randomly assign position of battleship
 ship_row = random_row(board)
 ship_col = random_col(board)
-
+#print(ship_row,ship_col)
 players = [player1, player2]
 player = 0 # starting player
     
@@ -63,7 +63,8 @@ def guess_ship(playa, ship_row, ship_col, player_board):
             print("%s, You guessed that one already."%(playa))
         else: #case whereby player's guess is wrong and not one of the two cases above
             print( "%s, You missed the battleship!"%(playa))
-            player_board.board[guess_row][guess_col]= "X"
+            player_board.change_board_square( guess_row, guess_col, "X" )
+            #player_board.board[guess_row][guess_col]= "X"
             #board.get_board()[guess_row][guess_col] = "X"
             
                 
@@ -96,13 +97,43 @@ for turn in range( 1,(max_games+1) ):
         
     if turn == max_games:
         print("Game Over!")
-           
-board1[ship_row][ship_col] = "A"
-board2[ship_row][ship_col] = "A"
-print("%s guesses:" %(player1))
-board_one.show_board()
+
+
+
+
+
+"""
+record the right position of the ship on player boards
+
+player_boards = [board_one, board_two]
+player_boards[1]
+player_boards[1].board[guess_row][guess_col] == "X"
+
+"""
+#print(ship_row,ship_col)
+player_boards[0].change_board_square( ship_row, ship_col, "A" )# in the firt player board, create an instance of the hidden ship.
+print(player_boards[0].board[ship_row][ship_col])
+print("%s guesses:" %( player1 ))
+player_boards[0].show_board() #display the first player board
+
+
+#displaying hidden ship on board
+player_boards[1].change_board_square(ship_row, ship_col, "A")# in the second player board, create an instance of the hidden ship.
+
+print(player_boards[1].board[ship_row][ship_col]) # Print the hidden ship on the board
 print("%s guesses:" %( player2 ))
-board_two.show_board()
+player_boards[1].show_board() #desplay the second player board
+#print(player_boards[1].board)
+
+
+
+
+
+
+
+
+
+           
 
 
 print( "The ship's position is: " "row %s, column %s (represented with letter 'A' on each board)"  % (ship_row, ship_col))            
