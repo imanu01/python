@@ -28,7 +28,7 @@ def random_col(board): # function for random column position of battleship
 # Using functions to randomly assign position of battleship
 ship_row = random_row(board)
 ship_col = random_col(board)
-#print(ship_row,ship_col)
+print(ship_row,ship_col)
 
 
         
@@ -36,7 +36,7 @@ player_one = battleship1.Player( player1, board, 1, 5 )
 player_two = battleship1.Player( player2, board, 2, 5 )
 players = [player_one, player_two]
 
-
+"""
 def guess_ship(playa, ship_row, ship_col ):
 
   
@@ -65,7 +65,7 @@ def guess_ship(playa, ship_row, ship_col ):
             #board.get_board()[guess_row][guess_col] = "X"
             
                 
-                
+ """               
 current_player_index = 0 # starting player
 
 def next_player_index(turn):
@@ -86,13 +86,15 @@ for turn in range( 1,(max_games+1) ):
     print("Turn", turn)
              
         
-    guess_ship( players[current_player_index], ship_row, ship_col )
+    battleship1.Player.guess_ship( players[current_player_index], ship_row, ship_col )
     #current_player_index = ( ( current_player_index +1 )% 2) #0: 1, 1: 0
     current_player_index = next_player_index(turn)
-     
-        
-    if turn == max_games:
+    if battleship1.Player.guess_ship( players[current_player_index], ship_row, ship_col ) ==1:
         print("Game Over!")
+        break
+    else:    
+        if turn == max_games:
+            print("Game Over!")
 
 
 
