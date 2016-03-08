@@ -1,6 +1,7 @@
 """ similar to the battleship_first script
 but represents classes board and player used in battleship_second. This script is expected to be imported into
 the battleship_second script"""
+from random import randint
 board = []
 
 
@@ -15,17 +16,26 @@ class Board(object):
         for item in range( self.size ):
             self.board.append( ["O"] * self.size )
 
-    def get_size(self):
+    def get_size( self ):
         return self.size
 
-    def get_board(self):
+    def get_board( self ):
         return self.board
 
 #function creates the position of the ship on board
-    def change_board_square(self,row,col,contents):
+    def change_board_square( self,row,col,contents ):
         self.board[row][col] = contents
 
-        
+#random numbers generated for the ship position 
+    def hidden_ship_position( self ):
+        ship_row = randint( 0, (self.size) - 1 )
+        ship_col = randint( 0, (self.size) - 1 )
+        # the random values generated for the ship are printed
+        #print( "Board %d Ship Column: %d" % ( self.number, ship_col ) )
+        #print( "Board %d Ship Column: %d" % ( self.number, ship_row ) )
+        return ship_row, ship_col
+
+
 
 #The board is displayed to players
     def show_board( self ):
@@ -44,17 +54,17 @@ class Player( object ):
         self.number = number
         self.player_board = Board(board, number, size ) #gets values from the Board class To define board in player class
 
-    def guess_ship(playa, ship_row, ship_col ):
+    def guess_ship( playa, ship_row, ship_col ):
 
       
     #4a. Compares guess values with randomly generated values
         #print_board(board)
         
         
-        print("The board shows your previous guess(es)")
+        print( "The board shows your previous guess(es)" )
         playa.player_board.show_board()
     #4b. Collects guess values of battleship position from player
-        guess_row = int(input("%s Please guess a row number:" % (playa.player_name)))# receives guessed row number from player. {}.format(name)
+        guess_row = int( input( "%s Please guess a row number:" % ( playa.player_name ) ) )# receives guessed row number from player. {}.format(name)
         guess_col = int(input("Also guess a column number: "))# receives guessed column number from player
 
         win = guess_row == ship_row and guess_col == ship_col

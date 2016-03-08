@@ -10,7 +10,7 @@ board = []
 
 
 
-board = battleship1.Board(board, 0, 5 )
+board_new = battleship1.Board(board, 0, 5 )
 
 
 max_games = int(input("Enter the maximum number of guesses you want to play: " ))
@@ -18,17 +18,22 @@ max_games = int(input("Enter the maximum number of guesses you want to play: " )
 player1 = (input("Enter the name of the first player: "))# requests the name of the player
 player2 = (input("Enter the name of the second player: "))
 
-
+"""
 def random_row( board ): # function for random row position of battleship
     return randint(0, board.get_size() - 1)
 
 def random_col(board): # function for random column position of battleship
     return randint(0, board.get_size() - 1)
+"""
+hidden_ship = battleship1.Board( board,0,5 )
+hidden_ship.hidden_ship_position()
+ship_row, ship_col = hidden_ship.hidden_ship_position()
+print( ship_row, ship_col )
 
 # Using functions to randomly assign position of battleship
-ship_row = random_row(board)
-ship_col = random_col(board)
-print(ship_row,ship_col)
+#ship_row = random_row(board)
+#ship_col = random_col(board)
+#print(ship_row,ship_col)
 
 
         
