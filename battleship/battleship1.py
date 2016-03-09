@@ -8,16 +8,16 @@ board = []
 class Board(object):
     
 	
-    def __init__( self, board, number, size ):
+    def __init__( self, board, number, board_size ):
         self.board = []
         self.number = number
-        self.size = size
+        self.board_size = board_size
 		
-        for item in range( self.size ):
-            self.board.append( ["O"] * self.size )
+        for item in range( self.board_size ):
+            self.board.append( ["O"] * self.board_size )
 
     def get_size( self ):
-        return self.size
+        return self.board_size
 
     
 
@@ -27,8 +27,8 @@ class Board(object):
 
 #random numbers generated for the ship position 
     def hidden_ship_position( self ):
-        ship_row = randint( 0, (self.size) - 1 )
-        ship_col = randint( 0, (self.size) - 1 )
+        ship_row = randint( 0, (self.board_size) - 1 )
+        ship_col = randint( 0, (self.board_size) - 1 )
         # the random values generated for the ship are printed
         #print( "Board %d Ship Column: %d" % ( self.number, ship_col ) )
         #print( "Board %d Ship Column: %d" % ( self.number, ship_row ) )
@@ -41,27 +41,29 @@ class Board(object):
         print( "Board: %d" % self.number )
         for row in self.board:# columns within each row are fused together
             print( ' '.join( row ) )
-"""
-board1=[]
-board_one = Board(board, 1, 5)
-"""
+
 
 class Player( object ):
     
-    def __init__( self, player_name, board, number, size ):
+    
+    def __init__( self, player_name, board, number, board_size ):
         self.player_name = player_name
         self.number = number
-        self.player_board = Board(board, number, size ) #gets values from the Board class To define board in player class
+        #self.max_guesses = max_guesses
+        self.player_board = Board(board, number, board_size ) #gets values from the Board class To define board in player class
+
+    
 
     def guess_ship( playa, ship_row, ship_col ):
 
-      
+        
     #4a. Compares guess values with randomly generated values
         #print_board(board)
         
         
         print( "The board shows your previous guess(es)" )
         playa.player_board.show_board()
+        
     #4b. Collects guess values of battleship position from player
         guess_row = int( input( "%s Please guess a row number:" % ( playa.player_name ) ) )# receives guessed row number from player. {}.format(name)
         guess_col = int(input("Also guess a column number: "))# receives guessed column number from player

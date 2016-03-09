@@ -3,42 +3,34 @@
 from random import randint
 
 import battleship1
-
-
-#2. Designing the boards for the Game
 board = []
 
+#2. Designing the boards for the Game
 
 
-board_new = battleship1.Board(board, 0, 5 )
 
 
-max_games = int(input("Enter the maximum number of guesses you want to play: " ))
+#board = battleship1.Board( board, 0, board_size )
+
+
+max_guesses = int(input("Enter the maximum number of guesses you want to play: " ))
     
-player1 = (input("Enter the name of the first player: "))# requests the name of the player
-player2 = (input("Enter the name of the second player: "))
+player1 = ( input( "Enter the name of the first player: " ) )# requests the name of the player
+player2 = ( input( "Enter the name of the second player: ") )
 
-"""
-def random_row( board ): # function for random row position of battleship
-    return randint(0, board.get_size() - 1)
-
-def random_col(board): # function for random column position of battleship
-    return randint(0, board.get_size() - 1)
-"""
-hidden_ship = battleship1.Board( board,0,5 )
+board_size =int(input("Enter the size of the board you want to use: " ) )
+                
+hidden_ship = battleship1.Board( board,0,board_size )
 hidden_ship.hidden_ship_position()
 ship_row, ship_col = hidden_ship.hidden_ship_position()
 print( ship_row, ship_col )
 
-# Using functions to randomly assign position of battleship
-#ship_row = random_row(board)
-#ship_col = random_col(board)
-#print(ship_row,ship_col)
+
 
 
         
-player_one = battleship1.Player( player1, board, 1, 5 )
-player_two = battleship1.Player( player2, board, 2, 5 )
+player_one = battleship1.Player( player1, board, 1, board_size )
+player_two = battleship1.Player( player2, board, 2, board_size )
 players = [player_one, player_two]
 
 """
@@ -72,12 +64,28 @@ def guess_ship(playa, ship_row, ship_col ):
                 
  """               
 current_player_index = 0 # starting player
-
-def next_player_index(turn):
-        if turn % 2 == 1:
-            return 1
-        else:
-            return 0
+"""
+def next_player_index( turn ):
+    if turn % 2 == 1:
+        return 1
+    else:
+        return 0
+        """
+"""def player_guess_count( turn  ):
+    player1_count = 0
+    player2_count = 0
+    for player1_count < max_guesses
+        if next_player_index( turn ) == 1:
+            player1_count = player1_count + 1
+            if player1_count = max_guesses:
+                print("You've used up all your guesses.")
+    for
+    elif next_player_index( turn ) == 0:
+            player2_count = player2_count + 1
+            if player1_count = max_guesses:
+                print("You've used up all your guesses.")
+"""
+        
 """
 turn % 2 = 0 means player 2
 turn % 2 = 1 means player 1
@@ -86,20 +94,34 @@ input even, intended output , actual output :
 """
 
 
-for turn in range( 1,(max_games+1) ):
+for turn in range( 1,( max_guesses + 1) ):
     
-    print("Turn", turn)
+    print( "Turn", turn )
              
         
-    battleship1.Player.guess_ship( players[current_player_index], ship_row, ship_col )
-    #current_player_index = ( ( current_player_index +1 )% 2) #0: 1, 1: 0
-    current_player_index = next_player_index(turn)
-    if battleship1.Player.guess_ship( players[current_player_index], ship_row, ship_col ) ==1:
-        print("Game Over!")
+    Y = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    
+    current_player_index = ( ( current_player_index +1 )% 2)
+    Z = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    
+    current_player_index = ( ( current_player_index +1 )% 2 )
+    #current_player_index = ( ( current_player_index +1 )% 2 ) #0: 1, 1: 0
+    #current_player_index = next_player_index( turn )
+    #battleship1.Player.player_guess_count( players[ current_player_index ] )
+
+    if ( Y == True ) and ( Z == True ):
+        print( "Game Over! It's a draw" )
         break
-    else:    
-        if turn == max_games:
-            print("Game Over!")
+    elif ( Y == True ) and ( Z == False ):
+        print("Game Over!: %s won the game" %( players[ ( current_player_index+1 )% 2 ].player_name ) )
+        break
+    elif Y == False and Z == 1:
+        print( "Game Over!: %s won the game" %( players[ current_player_index ].player_name ) )
+        break
+    
+    if turn == ( max_guesses ):
+        print( "Game Over!: None of you has won" )
+    
 
 
 
