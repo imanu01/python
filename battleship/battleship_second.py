@@ -17,6 +17,7 @@ max_guesses = int(input("Enter the maximum number of guesses you want to play: "
     
 player1 = ( input( "Enter the name of the first player: " ) )# requests the name of the player
 player2 = ( input( "Enter the name of the second player: ") )
+player3 = ( input( "Enter the name of the third player: ") )
 
 board_size =int(input("Enter the size of the board you want to use: " ) )
                 
@@ -31,7 +32,9 @@ print( ship_row, ship_col )
         
 player_one = battleship1.Player( player1, board, 1, board_size )
 player_two = battleship1.Player( player2, board, 2, board_size )
-players = [player_one, player_two]
+player_three = battleship1.Player( player3, board, 3, board_size )
+
+players = [player_one, player_two, player_three]
 
 """
 def guess_ship(playa, ship_row, ship_col ):
@@ -99,24 +102,33 @@ for turn in range( 1,( max_guesses + 1) ):
     print( "Turn", turn )
              
         
-    Y = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    x = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
     
-    current_player_index = ( ( current_player_index +1 )% 2)
-    Z = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    current_player_index = ( ( current_player_index +1 ) % 3 )
     
-    current_player_index = ( ( current_player_index +1 )% 2 )
-    #current_player_index = ( ( current_player_index +1 )% 2 ) #0: 1, 1: 0
+    y = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    
+    current_player_index = ( ( current_player_index +1 ) % 3 )
+    
+    z = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    
+    current_player_index = ( ( current_player_index +1 ) % 3 )
+    
+    #current_player_index = ( ( current_player_index +1 )% 3 ) #0: 1, 1: 0
     #current_player_index = next_player_index( turn )
     #battleship1.Player.player_guess_count( players[ current_player_index ] )
 
-    if ( Y == True ) and ( Z == True ):
+    if ( x == y == z == True ) or ( x == y == True ) or ( y == z == True ) or ( x == z == True ):
         print( "Game Over! It's a draw" )
         break
-    elif ( Y == True ) and ( Z == False ):
-        print("Game Over!: %s won the game" %( players[ ( current_player_index+1 )% 2 ].player_name ) )
+    elif ( x == True ) and ( y == z == False ):
+        print("Game Over!: %s has won the game" %( player1 ) )
         break
-    elif Y == False and Z == 1:
-        print( "Game Over!: %s won the game" %( players[ current_player_index ].player_name ) )
+    elif ( y == True ) and ( x == z ==  False):
+        print( "Game Over!: %s has won the game" %( player2 ) )
+
+    elif ( z == True ) and ( x == y == False):
+        print( "Game Over!: %s has won the game" %( player3 ) )
         break
     
     if turn == ( max_guesses ):
@@ -147,9 +159,14 @@ player_two.player_board.change_board_square(ship_row, ship_col, "A")# in the sec
 
 #print(player_two.player_board.board[ship_row][ship_col]) # Print the hidden ship on the board
 print("%s guesses:" %( player2 ))
-player_two.player_board.show_board() #desplay the second player board containing the missed values of the ship
+player_two.player_board.show_board() #display the second player board containing the missed values of the ship
 
+#displaying hidden ship on the second player's board
+player_three.player_board.change_board_square(ship_row, ship_col, "A")# in the second player board, create an instance of the hidden ship.
 
+#print(player_two.player_board.board[ship_row][ship_col]) # Print the hidden ship on the board
+print("%s guesses:" %( player3 ))
+player_three.player_board.show_board() #display the third player board containing the missed values of the ship
 
 
 
