@@ -3,17 +3,10 @@
 from random import randint
 
 import battleship1
-board = []
-
-#2. Designing the boards for the Game
 
 
 
-
-#board = battleship1.Board( board, 0, board_size )
-
-
-max_guesses = int(input("Enter the maximum number of guesses you want to play: " ))
+max_turns = int(input("Enter the maxìììììììììììììììììììììììììììììììììììimum number of game turns: " ))
     
 player1 = ( input( "Enter the name of the first player: " ) )# requests the name of the player
 player2 = ( input( "Enter the name of the second player: ") )
@@ -21,7 +14,7 @@ player3 = ( input( "Enter the name of the third player: ") )
 
 board_size =int(input("Enter the size of the board you want to use: " ) )
                 
-hidden_ship = battleship1.Board( board,0,board_size )
+hidden_ship = battleship1.Board( [], 0, board_size )
 hidden_ship.hidden_ship_position()
 ship_row, ship_col = hidden_ship.hidden_ship_position()
 print( ship_row, ship_col )
@@ -30,9 +23,9 @@ print( ship_row, ship_col )
 
 
         
-player_one = battleship1.Player( player1, board, 1, board_size )
-player_two = battleship1.Player( player2, board, 2, board_size )
-player_three = battleship1.Player( player3, board, 3, board_size )
+player_one = battleship1.Player( player1, [], 1, board_size )
+player_two = battleship1.Player( player2, [], 2, board_size )
+player_three = battleship1.Player( player3, [], 3, board_size )
 
 players = [player_one, player_two, player_three]
 
@@ -51,12 +44,12 @@ def guess_ship(playa, ship_row, ship_col ):
 
     if guess_row == ship_row and guess_col == ship_col: # Condition where player wins
         print("Congratulations! You sunk the battleship!")
-        exit() 
+        eplayer1_gameit() 
     else:
     # conditions whereby the player looses
         if (guess_row < 0 or guess_row > 4) or (guess_col < 0 or guess_col > 4): # Case whereby player guesses out of range
             print("Oops, %s, that's not even in the ocean." %(playa.player_name))
-        elif (playa.player_board.board[guess_row][guess_col] == "X"): #Case where player repeats previous guess.
+        elif (playa.player_board.board[guess_row][guess_col] == "player1_game"): #Case where player repeats previous guess.
             print("%s, You guessed that one already."%(playa.player_name))
         else: #case whereby player's guess is wrong and not one of the two cases above
             print( "%s, You missed the battleship!"%(playa.player_name))
@@ -97,41 +90,41 @@ input even, intended output , actual output :
 """
 
 
-for turn in range( 1,( max_guesses + 1) ):
+for game_turn in range( 1,( max_turns + 1) ):
     
-    print( "Turn", turn )
+    print( "Turn", game_turn )
              
         
-    x = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    player1_game = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
     
     current_player_index = ( ( current_player_index +1 ) % 3 )
     
-    y = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    player2_game = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
     
     current_player_index = ( ( current_player_index +1 ) % 3 )
     
-    z = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
+    player3_game = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
     
     current_player_index = ( ( current_player_index +1 ) % 3 )
     
-    #current_player_index = ( ( current_player_index +1 )% 3 ) #0: 1, 1: 0
+    #current_player_index = ( ( current_player_index +1 )% 3 ) #
     #current_player_index = next_player_index( turn )
     #battleship1.Player.player_guess_count( players[ current_player_index ] )
 
-    if ( x == y == z == True ) or ( x == y == True ) or ( y == z == True ) or ( x == z == True ):
+    if (  player1_game == player2_game == player3_game == True ) or ( player1_game == player2_game == True ) or ( player2_game == player3_game == True ) or ( player1_game == player3_game == True ):
         print( "Game Over! It's a draw" )
         break
-    elif ( x == True ) and ( y == z == False ):
+    elif ( player1_game == True ) and ( player2_game == player3_game == False ):
         print("Game Over!: %s has won the game" %( player1 ) )
         break
-    elif ( y == True ) and ( x == z ==  False):
+    elif ( player2_game == True ) and ( player1_game == z ==  False):
         print( "Game Over!: %s has won the game" %( player2 ) )
 
-    elif ( z == True ) and ( x == y == False):
+    elif ( player3_game == True ) and ( player1_game == player2_game == False):
         print( "Game Over!: %s has won the game" %( player3 ) )
         break
     
-    if turn == ( max_guesses ):
+    if game_turn == ( max_turns ):
         print( "Game Over!: None of you has won" )
     
 
@@ -144,7 +137,7 @@ record the right position of the ship on player boards
 
 player_boards = [board_one, board_two]
 player_boards[1]
-player_boards[1].board[guess_row][guess_col] == "X"
+player_boards[1].board[guess_row][guess_col] == "player1_game"
 
 """
 #print(ship_row,ship_col)
