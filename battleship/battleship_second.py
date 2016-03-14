@@ -4,35 +4,34 @@ from random import randint
 
 import battleship1
 
+board_size =int(input("Enter the size of the board you want to use: " ) )
 max_turns  = 0
-    
-while True:
+no_of_players = 0   
+
+while max_turns <= 0:
     try:
 
         max_turns = int(input("Enter the maximum number of game turns: " ))
-
+        
     except ValueError:
         print( "Please enter a number!" )
-        continue
-    if max_turns < 0:
-        print( "Please type a value greater than 0!" )
-    else:
-        break
+    if max_turns < 0 :
+        print("Enter a positive integer" )
+    
 
-no_of_players = 0
 
-while True:
+while no_of_players < 2:
+    
     try:
 
         no_of_players = int( input( "Enter the number of players: " ) )# requests the name of the player
 
     except ValueError:
         print( "Please enter a number!" )
-        continue
     if no_of_players < 2:
+        
         print( "Please type a value greater than 1!" )
-    else:
-        break
+    
 
 
 
@@ -44,14 +43,14 @@ while True:
 #"player2 = ( input( "Enter the name of the second player: ") )
 #"player3 = ( input( "Enter the name of the third player: ") )
 
-board_size =int(input("Enter the size of the board you want to use: " ) )
+
                 
 hidden_ship = battleship1.Board( [], 0, board_size )
 hidden_ship.hidden_ship_position()
 ship_row, ship_col = hidden_ship.hidden_ship_position()
 print( ship_row, ship_col )
 
-
+winners = []
 player_names = []
 player_class_names = []
 player_classes = []
@@ -110,7 +109,7 @@ def guess_ship(playa, ship_row, ship_col ):
  """               
 current_player_index = 0 # starting player
 """
-def next_player_index( turn ):
+def next_player_index( no_of_players):
     if turn % 2 == 1:
         return 1
     else:
@@ -130,16 +129,34 @@ for game_turn in range( 1,( max_turns + 1) ):
     
     print( "Turn", game_turn )
              
+    for player_class in player_classes:
         
-    battleship1.Player.guess_ship( player_class_names[ current_player_index ], ship_row, ship_col )
+        active_player = battleship1.Player.guess_ship( player_classes[ current_player_index ], board_size, ship_row, ship_col )
     
-    if battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col ) == True:
+        if active_player == True:
+
+            winners.append( player_classes[ current_player_index ].player_name )
         
-        player_class_name.remove( player_class_names[ current_player_index ])
-        
-        
-    current_player_index = ( ( current_player_index +1 ) % len( player_class_names )
+            player_classes.remove( player_classes[ current_player_index ])
+
+            if player_classes == []:
+
+                print( "The game is draw!" )
+
+                break
+
+            else:
+                current_player_index = ( ( current_player_index ) % len( player_classes ))
+            
+        else:
+            current_player_index = ( ( current_player_index +1 ) % len( player_classes ))
+
     
+
+    if game_turn == ( max_turns ):
+
+        print( "Game Over!" )
+
     #player2_game = battleship1.Player.guess_ship( players[ current_player_index ], ship_row, ship_col )
     
     #current_player_index = ( ( current_player_index +1 ) % 3 )
@@ -165,8 +182,7 @@ for game_turn in range( 1,( max_turns + 1) ):
         print( "Game Over!: %s has won the game" %( player3 ) )
         break """
     
-    if game_turn == ( max_turns ):
-        print( "Game Over!: None of you has won" )
+    
     
 
 
@@ -224,5 +240,11 @@ player_three.player_board.show_board() #display the third player board containin
 
 
 print( "The ship's position is: " "row %s, column %s (represented with letter \' A \' on each board)"  % (ship_row, ship_col))            
+print( "The winners are:" )
 
+if winners == []:
+    print(" You all lost!")
+
+else:
+    print( ', '.join(winners))
 

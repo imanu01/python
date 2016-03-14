@@ -49,12 +49,12 @@ class Player( object ):
     def __init__( self, player_name, board, number, board_size ):
         self.player_name = player_name
         self.number = number
-        #self.max_guesses = max_guesses
+        
         self.player_board = Board(board, number, board_size ) #gets values from the Board class To define board in player class
 
     
 
-    def guess_ship( playa, ship_row, ship_col ):
+    def guess_ship( playa, board_size, ship_row, ship_col ):
 
         
     #4a. Compares guess values with randomly generated values
@@ -75,7 +75,7 @@ class Player( object ):
             
                 
        # conditions whereby the player looses
-        if ( guess_row < 0 or guess_row > 4 ) or ( guess_col < 0 or guess_col > 4 ): # Case whereby player guesses out of range
+        if ( guess_row < 0 or guess_row > ( board_size - 1) ) or ( guess_col < 0 or guess_col > ( board_size -1 ) ): # Case whereby player guesses out of range
             print( "Oops, %s, that's not even in the ocean." %( playa.player_name ))
             
         elif ( playa.player_board.board[ guess_row ][ guess_col ] == "X" ): #Case where player repeats previous guess.
